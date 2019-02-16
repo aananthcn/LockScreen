@@ -43,6 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean isActive = devicePolicyManager.isAdminActive(compName);
         disable.setVisibility(isActive ? View.VISIBLE : View.GONE);
         enable.setVisibility(isActive ? View.GONE : View.VISIBLE);
+
+        // lock the phone, without waiting for button click if admin setup is already done!
+        if (isActive) {
+            // lock it
+            devicePolicyManager.lockNow();
+
+            // exit, so that upon unlock this app doesn't lock the screen again
+            finish();
+            System.exit(0);
+        }
     }
 
 
